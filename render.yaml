@@ -1,0 +1,13 @@
+version: 1
+
+services:
+  web:
+    type: docker
+    name: vehicle-allocation-system
+    dockerfilePath: ./Dockerfile  # Path to your Dockerfile
+    dockerComposeFile: ./docker-compose.yml  # Reference your existing docker-compose.yml
+    autoDeploy: true
+    healthCheckPath: "/"  # Adjust if needed
+    instanceType: "Web Service"
+    plan: "Free"  # Choose an appropriate plan based on your requirements
+    region: "singapore"  # Choose your preferred region

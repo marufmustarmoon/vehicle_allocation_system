@@ -1,6 +1,6 @@
 
 
-```markdown
+
 # Vehicle Allocation System
 
 ## Overview
@@ -87,20 +87,15 @@ The Vehicle Allocation System is a FastAPI application designed to manage employ
    docker-compose down
    ```
 
-## API Endpoints
+## Endpoints
 
-- **Get Employees with Allocations**
-  - **Endpoint:** `GET /api/v1/employees/employees`
-  - **Query Parameters:**
-    - `include_allocations`: `true` or `false`
-    - `skip`: Number of records to skip (for pagination)
-    - `limit`: Number of records to return
+All the endpoinds shown in openAPI Swagger
+just run the project and use /docs after the base url
 
-- **Other endpoints** for managing vehicles, allocations, and employees can be added here.
+## Caching
 
-## Contributing
-
-Contributions are welcome! Please fork the repository and create a pull request for any changes.
+Caching is actually depend on the project. If there is huge traffic then caching time will be different
+I used 60 second caching time.
 
 ## License
 
