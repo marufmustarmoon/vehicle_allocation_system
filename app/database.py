@@ -4,7 +4,7 @@ import os
 
 
 MONGO_DB_URL = os.getenv("MONGODB_URL", "mongodb+srv://marufmustarmoon:c5kuYnfrQKyQynTY@marufmustar.q9rok.mongodb.net/?retryWrites=true&w=majority&appName=marufmustar")
-print("check url",MONGO_DB_URL)
+
 DATABASE_NAME = "vehicle_allocation_db"
 
 client = None
@@ -18,9 +18,9 @@ async def connect_to_mongo():
     
     try:
         await client.admin.command('ping')
-        print("Connected to MongoDB successfully!")
+        
         db = client[DATABASE_NAME]
-        print(f"Database selected: {DATABASE_NAME}")
+       
     except ConnectionFailure as e:
         print(f"Could not connect to MongoDB: {e}")
         return  # If connection fails, exit the function

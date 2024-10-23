@@ -27,8 +27,8 @@ app = FastAPI(title="Vehicle Allocation System", lifespan=lifespan)
 
 # Include allocation, employee, and vehicle routes
 app.include_router(allocations_router, prefix="/api/v1/allocations", tags=["Allocations"])
-app.include_router(employees_router, prefix="/api/v1/employees", tags=["Employees"])
-app.include_router(vehicles_router, prefix="/api/v1/vehicles", tags=["Vehicles"])
+app.include_router(employees_router, prefix="/api/v1", tags=["Employees"])
+app.include_router(vehicles_router, prefix="/api/v1", tags=["Vehicles"])
 
 @app.get("/")
 async def read_root():
