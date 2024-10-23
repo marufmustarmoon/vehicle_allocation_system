@@ -13,7 +13,7 @@ allocation_collection = None
 
 
 async def connect_to_mongo():
-    global client, db, allocation_collection ,vehicles_collection # Declare global variables to modify them
+    global client, db, allocation_collection ,vehicles_collection,employee_collection # Declare global variables to modify them
     client = AsyncIOMotorClient(MONGO_DB_URL)
     
     try:
@@ -28,9 +28,8 @@ async def connect_to_mongo():
     # Now set the global variable for allocation_collection
     allocation_collection = db["allocations"]
     vehicles_collection = db["vehicles"]
-    # Ensure indexes for optimal query performance
-    await db["allocations"].create_index([("vehicle_id", 1), ("allocation_date", 1)], unique=True)
-    await db["allocations"].create_index([("employee_id", 1)])
+    employee_collection = db["employees"]
+   
 
 
 async def close_mongo_connection():
@@ -39,9 +38,13 @@ async def close_mongo_connection():
 
 
 async def get_allocation_collection():
-    print("Fetching allocation collection", allocation_collection)
+    
     return allocation_collection  # Return the already initialized collection
 
 async def get_vehicle_collection():
     
     return vehicles_collection
+
+
+async def get_employee_collection():
+    return employee_collection

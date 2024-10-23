@@ -6,4 +6,4 @@ aioredis
 pytest
 httpx
 pydantic-settings
-
+faker
