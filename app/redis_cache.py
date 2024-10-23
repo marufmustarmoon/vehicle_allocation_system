@@ -1,24 +1,46 @@
 import aioredis
-from app.core.config import settings
+from typing import Optional
+from pydantic import BaseSettings, Field
 
-redis_client = None
+class RedisSettings(BaseSettings):
+    host: str = Field(default="localhost")
+    port: int = Field(default=6379)
+    db: int = Field(default=0)
 
-async def connect_to_redis():
-    global redis_client
-    redis_client = await aioredis.create_redis_pool(settings.redis_url)
+class AppSettings(BaseSettings):
+    redis: RedisSettings = RedisSettings()
 
-async def close_redis_connection():
-    redis_client.close()
-    await redis_client.wait_closed()
+settings = AppSettings()
 
-async def get_cached_data(key: str):
-    value = await redis_client.get(key)
-    if value:
-        return value.decode('utf-8')
-    return None
+class RedisCache:
+    def __init__(self):
+        self.redis = None
 
-async def set_cache_data(key: str, value: str, ttl: int = 300):
-    await redis_client.set(key, value, expire=ttl)
+    async def initialize(self):
+        self.redis = await aioredis.create_redis_pool(
+            (settings.redis.host, settings.redis.port),
+            db=settings.redis.db
+        )
 
-async def delete_cache_data(key: str):
-    await redis_client.delete(key)
+    async def set_cache(self, key: str, value: str, expire: int = 300):
+        await self.redis.set(key, value, expire=expire)
+
+    async def get_cache(self, key: str):
+        return await self.redis.get(key)
+
+    async def delete_cache(self, key: str):
+        await self.redis.delete(key)
+
+    async def close(self):
+        self.redis.close()
+        await self.redis.wait_closed()
+
+# Initialize RedisCache globally
+redis_cache = RedisCache()
+
+# Lifespan event for FastAPI startup and shutdown
+async def on_startup():
+    await redis_cache.initialize()
+
+async def on_shutdown():
+    await redis_cache.close()

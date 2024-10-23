@@ -7,3 +7,5 @@ pytest
 httpx
 pydantic-settings
 faker
+setuptools
+pytest
