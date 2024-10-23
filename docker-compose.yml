@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    container_name: fastapi_vehicle_allocation
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongodb
+      - redis
+
+  mongodb:
+    image: mongo:5.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"

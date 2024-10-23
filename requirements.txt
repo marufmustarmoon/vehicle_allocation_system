@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+motor
+pydantic
+aioredis
+pytest
+httpx
+pydantic-settings
+
