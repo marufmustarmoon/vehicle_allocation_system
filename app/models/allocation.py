@@ -11,9 +11,8 @@ class AllocationIn(BaseModel):
 
     @field_validator('allocation_date')
     def validate_allocation_date(cls, v):
-        print(v)
-        print(datetime.now())
-        if v < datetime.now():
+        
+        if v < datetime.now(timezone.utc):
             raise ValueError('The allocation date must be in the future.')
         return v
 

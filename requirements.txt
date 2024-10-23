@@ -2,10 +2,12 @@ fastapi
 uvicorn
 motor
 pydantic
-aioredis
 pytest
 httpx
 pydantic-settings
 faker
 setuptools
 pytest
+pytz
+redis
+pytest-asyncio

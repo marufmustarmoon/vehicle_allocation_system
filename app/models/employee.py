@@ -22,6 +22,4 @@ class EmployeeResponse(BaseModel):
     department: str = Field(..., description="Employee's department")
     allocated_by: Optional[Allocation] = Field(None, description="Allocation details if any")
 
-    class Config:
-        from_attributes = True
-        arbitrary_types_allowed = True  
+   

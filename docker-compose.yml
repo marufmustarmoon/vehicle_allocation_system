@@ -1,25 +1,18 @@
-version: '3'
+version: '3.8'
 
 services:
   app:
-    build: .
-    container_name: fastapi_vehicle_allocation
+    build: .  # Build from the Dockerfile in the current directory
+    env_file:
+      - .env  # Load environment variables from the .env file
     ports:
-      - "8000:8000"
-    depends_on:
-      - mongodb
-      - redis
-
-  mongodb:
-    image: mongo:5.0
-    container_name: mongodb
-    ports:
-      - "27017:27017"
+      - "8000:8000"  # Map port 8000 of the container to port 8000 on the host
     volumes:
-      - ./data:/data/db
+      - .:/app  # Mount the current directory to /app in the container
+    depends_on:
+      - redis  # Ensure Redis service starts before the app
 
   redis:
-    image: redis:alpine
-    container_name: redis
+    image: redis:latest  # Use the latest Redis image from Docker Hub
     ports:
-      - "6379:6379"
+      - "6379:6379"  # Map port 6379 of the container to port 6379 on the host
